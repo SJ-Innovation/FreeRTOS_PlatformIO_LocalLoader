@@ -1,5 +1,5 @@
 from glob import glob
-from os import listdir, remove
+from os import listdir, remove, getenv
 from os.path import basename, isdir, isfile, join, dirname, realpath
 from shutil import copy
 from string import Template
@@ -17,12 +17,12 @@ board = env.BoardConfig()
 
 THIS_SCRIPT_DIR = Path().absolute()
 
-FREERTOS_FIRMWARE_DIR = None  ## "Or a path here"
+FREERTOS_FIRMWARE_DIR = getenv("PIO_FREERTOS_FIRMWARE_DIR")
 if FREERTOS_FIRMWARE_DIR is None:
-    FREERTOS_FW_NAME = None  ## "Or a name here"
+    FREERTOS_FW_NAME = getenv("PIO_FREERTOS_FIRMWARE_NAME")
     if FREERTOS_FW_NAME is None:
         for i in listdir(THIS_SCRIPT_DIR):
-            if "FreeRTOS_" in i:
+            if "FreeRTOS" in i:
                 FREERTOS_FW_NAME = i
                 break
     assert FREERTOS_FW_NAME is not None
